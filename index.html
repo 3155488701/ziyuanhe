@@ -1,0 +1,1690 @@
+<html lang="zh-CN">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <title>动漫/小说/漫画/影视/工具资源</title> 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"> 
+  <style>
+        /* 保持原有样式不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #1f1f1f;
+            padding: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            margin-bottom: 20px;
+            padding: 16px;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .title-section h1 {
+            font-weight: 500;
+            font-size: clamp(1.5rem, 5vw, 1.8rem);
+            margin-bottom: 8px;
+        }
+        
+        .title-section p {
+            color: #5f6368;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: #f1f3f4;
+            border-radius: 8px;
+            padding: 8px 16px;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container:focus-within {
+            background: #e6f1fe;
+            box-shadow: 0 0 0 2px #1a73e8;
+        }
+        
+        .search-container input {
+            border: none;
+            background: transparent;
+            margin-left: 8px;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #f1f3f4;
+            color: #5f6368;
+            font-size: 0.9rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            margin-right: 24px;
+        }
+        
+        .stat-item .material-icons {
+            font-size: 1.1rem;
+            margin-right: 6px;
+        }
+        
+        /* 分类文件夹样式 - 横向滚动卡片 */
+        .categories-scroll {
+            overflow-x: auto;
+            padding: 8px 0;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .categories-container {
+            margin-bottom: 20px;
+        }
+        
+        .categories-title {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #5f6368;
+        }
+        
+        .categories-grid {
+            display: flex;
+            gap: 16px;
+            padding: 4px 0;
+            min-width: max-content;
+        }
+        
+        /* 优化的分类卡片样式 */
+        .category-folder {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .category-folder:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-folder.active {
+            border: 2px solid #1a73e8;
+        }
+        
+        .folder-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #1a73e8;
+            width: auto;
+            height: auto;
+            border-radius: 0;
+            background-color: transparent;
+        }
+        
+        .folder-info {
+            text-align: center;
+        }
+        
+        .folder-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .folder-count {
+            font-size: 0.8rem;
+            color: #5f6368;
+        }
+        
+        /* 应用卡片样式 */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 4px;
+        }
+        
+        .app-card {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .app-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .app-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            width: 100%;
+            gap: 16px;
+        }
+        
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .app-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .app-name {
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .app-version {
+            color: #5f6368;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        
+        .app-size {
+            font-weight: 500;
+            color: #1a73e8;
+            font-size: 0.9rem;
+        }
+        
+        .app-description {
+            color: #5f6368;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #5f6368;
+            font-size: 0.9rem;
+            margin-top: auto;
+            align-items: center;
+        }
+        
+        .category {
+            background: #f1f3f4;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            display: inline-block;
+            width: fit-content;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .download-btn:hover {
+            background-color: #0d62c9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .download-btn:active {
+            background-color: #0b56b4;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .download-btn .material-icons {
+            font-size: 1.1rem;
+            margin-right: 6px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+            color: #5f6368;
+        }
+        
+        .no-results .material-icons {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #dadce0;
+        }
+        
+        /* 不同颜色区分 */
+        .icon-blue { background-color: #1a73e8; }
+        .icon-red { background-color: #ea4335; }
+        .icon-green { background-color: #0f9d58; }
+        .icon-yellow { background-color: #fbbc04; }
+        .icon-purple { background-color: #a142f4; }
+        .icon-pink { background-color: #f538a0; }
+        .icon-teal { background-color: #0097a7; }
+        .icon-orange { background-color: #ff6d00; }
+        .icon-brown { background-color: #6d4c41; }
+        .icon-indigo { background-color: #3f51b5; }
+        
+        /* 响应式设计优化 */
+        @media (max-width: 768px) {
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(47%, 1fr));
+                gap: 16px;
+                padding: 0 8px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-container {
+                width: 100%;
+                margin-top: 16px;
+            }
+            
+            .stats-bar {
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                margin-bottom: 8px;
+                margin-right: 16px;
+            }
+            
+            .category-folder {
+                min-width: 100px;
+                padding: 12px;
+            }
+            
+            .folder-icon {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .apps-grid {
+                display: flex;
+                flex-direction: column;
+                padding: 0 8px;
+            }
+            
+            .app-header {
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: nowrap;
+                gap: 12px;
+            }
+            
+            .app-icon {
+                margin-bottom: 0;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .download-btn {
+                margin-top: 0;
+                width: auto;
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .app-name {
+                font-size: 1rem;
+            }
+            
+            .app-version, .app-size {
+                font-size: 0.85rem;
+            }
+            
+            .app-description {
+                font-size: 0.85rem;
+                margin-bottom: 12px;
+            }
+            
+            .categories-title {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+            
+            .category-folder {
+                min-width: 85px;
+                padding: 10px;
+            }
+            
+            .folder-name {
+                font-size: 0.85rem;
+            }
+            
+            .folder-count {
+                font-size: 0.75rem;
+            }
+            
+            .stat-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* 下载线路选择弹窗样式 (MD3风格) */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .dialog-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dialog-container {
+            background-color: #fff;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            transition: transform 0.2s ease;
+        }
+
+        .dialog-overlay.active .dialog-container {
+            transform: translateY(0);
+        }
+
+        .dialog-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dialog-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .dialog-subtitle {
+            color: #5f6368;
+            font-size: 0.9rem;
+        }
+
+        .dialog-body {
+            padding: 24px;
+        }
+
+        .download-option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-radius: 12px;
+            background-color: #f8f9fa;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .download-option:hover {
+            background-color: #f1f3f4;
+        }
+
+        /* 网盘图标样式 - 适配大小 */
+        .download-option img {
+            width: 28px;
+            height: 28px;
+            margin-right: 16px;
+            object-fit: contain;
+        }
+
+        .option-info {
+            flex: 1;
+        }
+
+        .option-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .option-desc {
+            font-size: 0.85rem;
+            color: #5f6368;
+        }
+
+        .dialog-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .dialog-btn {
+            padding: 10px 24px;
+            border-radius: 24px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .dialog-btn-cancel {
+            background-color: #f1f3f4;
+            color: #1f1f1f;
+            margin-right: 8px;
+        }
+
+        .dialog-btn-cancel:hover {
+            background-color: #e8eaed;
+        }
+
+        /* 加载状态样式 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1010;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-overlay .material-icons {
+            font-size: 48px;
+            color: #1a73e8;
+            margin-bottom: 16px;
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            color: #1f1f1f;
+        }
+        /* 打赏按钮样式 */
+        .donate-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background-color: #1a73e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .donate-fab:hover {
+            background-color: #0d62c9;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .donate-fab .material-icons {
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* 二维码容器样式 */
+        .qrcode-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .qrcode-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .qrcode-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #eee;
+        }
+        
+        .qrcode-title {
+            font-weight: 500;
+            color: #1f1f1f;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .donate-fab {
+                bottom: 16px;
+                right: 16px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .qrcode-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .qrcode-img {
+                width: 160px;
+                height: 160px;
+            }
+    </style> 
+  <script src="js/jq.js"></script> 
+ </head> 
+ <body id="v1"> 
+  <div id="v2" class="header"> 
+   <div id="v3" class="header-content"> 
+    <div id="v4" class="title-section"> 
+     <h1 id="v5">动漫/小说/漫画/影视/工具资源</h1> 
+     <p id="v6">订阅并更新最新资源</p> 
+    </div> 
+    <div id="v7" class="search-container"> 
+     <span id="v8" class="material-icons">search</span> 
+     <input type="text" id="searchInput" placeholder="搜索应用名称、类别或描述..."> 
+    </div> 
+   </div> 
+   <div id="v9" class="stats-bar"> 
+    <div id="v10" class="stat-item"> 
+     <span id="v11" class="material-icons">apps</span> 
+     <span id="v12">21 个应用</span> 
+    </div> 
+    <div id="v13" class="stat-item"> 
+     <span id="v14" class="material-icons">category</span> 
+     <span id="v15">6 个类别</span> 
+    </div> 
+    <div id="v16" class="stat-item"> 
+     <span id="v17" class="material-icons">update</span> 
+     <span id="v18">最近更新: 2025年10月4日</span> 
+    </div> 
+   </div> 
+  </div> 
+  <!-- 分类卡片区域 - 横向滚动 --> 
+  <div id="v19" class="categories-container"> 
+   <div id="v20" class="categories-title">
+     资源分类 
+   </div> 
+   <div id="v21" class="categories-scroll"> 
+    <div class="categories-grid" id="categoriesGrid"> 
+     <!-- 全部资源 --> 
+     <div id="v22" class="category-folder active" data-category="全部资源"> 
+      <span id="v23" class="material-icons folder-icon">category</span> 
+      <div id="v24" class="folder-info"> 
+       <div id="v25" class="folder-name">
+         全部资源 
+       </div> 
+       <div id="v26" class="folder-count">
+         21 个应用 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 动漫资源 --> 
+     <div id="v27" class="category-folder" data-category="动漫资源"> 
+      <span id="v28" class="material-icons folder-icon">movie</span> 
+      <div id="v29" class="folder-info"> 
+       <div id="v30" class="folder-name">
+         动漫资源 
+       </div> 
+       <div id="v31" class="folder-count">
+         4 个应用 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 漫画资源 --> 
+     <div id="v32" class="category-folder" data-category="漫画资源"> 
+      <span id="v33" class="material-icons folder-icon">book</span> 
+      <div id="v34" class="folder-info"> 
+       <div id="v35" class="folder-name">
+         漫画资源 
+       </div> 
+       <div id="v36" class="folder-count">
+         1 个应用 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 小说资源 --> 
+     <div id="v37" class="category-folder" data-category="小说资源"> 
+      <span id="v38" class="material-icons folder-icon">description</span> 
+      <div id="v39" class="folder-info"> 
+       <div id="v40" class="folder-name">
+         小说资源 
+       </div> 
+       <div id="v41" class="folder-count">
+         1 个应用 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 工具资源 --> 
+     <div id="v42" class="category-folder" data-category="工具资源"> 
+      <span id="v43" class="material-icons folder-icon">build</span> 
+      <div id="v44" class="folder-info"> 
+       <div id="v45" class="folder-name">
+         工具资源 
+       </div> 
+       <div id="v46" class="folder-count">
+         9 个应用 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 影视资源 --> 
+     <div class="category-folder" data-category="影视资源"> 
+      <span class="material-icons folder-icon">live_tv</span> 
+      <div class="folder-info"> 
+       <div class="folder-name">
+         影视资源 
+       </div> 
+       <div class="folder-count">
+         6 个应用 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <!-- 应用列表区域 --> 
+  <div class="apps-grid" id="appsGrid"> 
+   <!-- 现有应用卡片 - 动漫资源（囧次元） --> 
+   <div id="v52" class="app-card" data-name="囧次元" data-category="动漫资源" data-description="纯洁无广告版本 纵享追番丝滑" style="box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;"> 
+    <div id="v53" class="app-header"> 
+     <div id="v54" class="app-icon icon-blue"> 
+      <img id="v55" src="/ziyuanhe/jio.png" alt="囧次元"> 
+     </div> 
+     <div id="v56" class="app-info"> 
+      <div id="v57" class="app-name">
+        囧次元_无广版 
+      </div> 
+      <div id="v58" class="app-version">
+        版本 1.5.8.0 
+      </div> 
+      <div id="v59" class="app-size">
+        35.2 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="囧次元_无广版" data-uc="https://pan.uc.cn/s/1BAR6cFAg17JhY7MoSMn4yw?pwd=5q84" data-xunlei="https://pan.xunlei.com/s/VOaZXwfQSWxQy8Lk8daCWKXjA1?pwd=m3f2" data-kuake="https://pan.quark.cn/s/2c7e1a9697f7"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div id="v61" class="app-description">
+      纯洁无广告版本 纵享追番丝滑 
+    </div> 
+    <div id="v62" class="app-meta"> 
+     <div id="v63" class="category">
+       动漫资源 
+     </div> 
+    </div> 
+    <form id="v199"> 
+    </form> 
+   </div> 
+   
+   <!-- 新增：动漫资源 - 动漫共和国 --> 
+   <div class="app-card" data-name="动漫共和国" data-category="动漫资源" data-description="纯净无广告版本 纵享追番丝滑"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/dongmangongheguo.png" alt="动漫共和国"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        动漫共和国_无广版 
+      </div> 
+      <div class="app-version">
+        版本 1.0.0.7 
+      </div> 
+      <div class="app-size">
+        32.2 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="动漫共和国_无广版" data-uc="https://drive.uc.cn/s/cc04eba403b44" data-xunlei="https://pan.xunlei.com/s/VOmyi3DWZV-w7eoHmU6jJrr-A1?pwd=w76d" data-kuake="https://pan.quark.cn/s/35946755bd93"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      纯净无广告版本 纵享追番丝滑 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       动漫资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：动漫资源 - Animeko --> 
+   <div class="app-card" data-name="Animeko" data-category="动漫资源" data-description="全网新番一网打尽的追番利器，开源社区维护无广告"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/Animeko.png" alt="Animeko"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        Animeko 
+      </div> 
+      <div class="app-version">
+        版本 5.0.1 
+      </div> 
+      <div class="app-size">
+        40.27 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="Animeko" data-uc="https://drive.uc.cn/s/a1142686bfbf4" data-xunlei="https://pan.xunlei.com/s/VOmyjYqZ4NKGrcq-z-zHEt8eA1?pwd=mm4b" data-kuake="https://pan.quark.cn/s/53732d9ed623"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      全网新番一网打尽的追番利器，开源社区维护无广告 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       动漫资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：动漫资源 - Kazumi --> 
+   <div class="app-card" data-name="Kazumi" data-category="动漫资源" data-description="基于Flutter开发的番剧采集神器，支持自定义Xpath规则、实时超分、跨平台追番"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/Ki.png" alt="Kazumi"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        Kazumi 
+      </div> 
+      <div class="app-version">
+        版本 1.8.2 
+      </div> 
+      <div class="app-size">
+        19.89 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="Kazumi" data-uc="https://drive.uc.cn/s/c0a650ff89984" data-xunlei="https://pan.xunlei.com/s/VOmykBccsNdYFvXfhYRe0fZ3A1?pwd=hzrj" data-kuake="https://pan.quark.cn/s/7d47173bee4a"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      基于Flutter开发的番剧采集神器，支持自定义Xpath规则、实时超分、跨平台追番 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       动漫资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 现有应用卡片 - 工具资源（万能钥匙） --> 
+   <div class="app-card" data-name="万能钥匙" data-category="工具资源" data-description="简洁去广版"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/wnys.png" alt="万能钥匙纯净版"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        万能钥匙_纯净版 
+      </div> 
+      <div class="app-version">
+        版本 6.6.3 
+      </div> 
+      <div class="app-size">
+        30.69 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="万能钥匙纯净版" data-uc="https://pan.uc.cn/s/1uRcYqt_ECCzBa6wT0zc5jA?pwd=38iu" data-xunlei="https://pan.xunlei.com/s/VOahs7CojNZY3waS8GqAkJXbA1?pwd=89sq" data-kuake="https://pan.quark.cn/s/f94dbcee24a7"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      简洁无广告 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源  
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - Olib_1.0.4 --> 
+   <div class="app-card" data-name="Olib_1.0.4" data-category="工具资源" data-description="实用工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/olib.png" alt="Olib_1.0.4"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        Olib_1.0.4 
+      </div> 
+      <div class="app-version">
+        版本 1.0.4 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="Olib_1.0.4" data-uc="https://drive.uc.cn/s/089f8a499afb4" data-xunlei="https://pan.xunlei.com/s/VOmymNuu20FSLOteV14iCG7PA1?pwd=99ab" data-kuake="https://pan.quark.cn/s/524eb067ae15"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      实用工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - 光速虚拟机 --> 
+   <div class="app-card" data-name="光速虚拟机" data-category="工具资源" data-description="安卓虚拟机工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/guangsuxuniji.png" alt="光速虚拟机"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        光速虚拟机 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="光速虚拟机" data-uc="https://drive.uc.cn/s/fa5cf64616464" data-xunlei="https://pan.xunlei.com/s/VOmymVxfW9vl_pe5cGmyISnPA1?pwd=ze6d" data-kuake="https://pan.quark.cn/s/dd458ee04bda"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      安卓虚拟机工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - 音频剪辑提取器高级版 --> 
+   <div class="app-card" data-name="音频剪辑提取器高级版" data-category="工具资源" data-description="音频处理工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/yinpinjianji.png" alt="音频剪辑提取器高级版"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        音频剪辑提取器高级版 
+      </div> 
+      <div class="app-version">
+        版本 高级版 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="音频剪辑提取器高级版" data-uc="https://drive.uc.cn/s/490470fcff2f4" data-xunlei="https://pan.xunlei.com/s/VOmymh8bFFchf4G4nX6nV7B6A1?pwd=kw3y" data-kuake="https://pan.quark.cn/s/b4ca1d4eb5c4"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      音频处理工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - WiFi万能钥匙精简版 --> 
+   <div class="app-card" data-name="WiFi万能钥匙精简版" data-category="工具资源" data-description="简洁无广告版"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/wnys.png" alt="WiFi万能钥匙精简版"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        WiFi万能钥匙精简版 
+      </div> 
+      <div class="app-version">
+        版本 精简版 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="WiFi万能钥匙精简版" data-uc="https://drive.uc.cn/s/4d27af0c3d364" data-xunlei="https://pan.xunlei.com/s/VOmymoiZVoC_UJcntaa66IqUA1?pwd=gq8d" data-kuake="https://pan.quark.cn/s/481dc1ff5da9"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      简洁无广告版 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - PiliPlus --> 
+   <div class="app-card" data-name="PiliPlus" data-category="工具资源" data-description="实用工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/piliplus.png" alt="PiliPlus"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        PiliPlus 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="PiliPlus" data-uc="https://drive.uc.cn/s/1bb36b0ac01e4" data-xunlei="https://pan.xunlei.com/s/VOmyn1eW56w33pDtnQIi1-oQA1?pwd=rw2j" data-kuake="https://pan.quark.cn/s/c6ea80319a68"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      实用工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - 视频转换器 --> 
+   <div class="app-card" data-name="视频转换器" data-category="工具资源" data-description="简洁无广告的多种格式音视频剪辑合并工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/spzhq.png" alt="视频转换器"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        视频转换器 
+      </div> 
+      <div class="app-version">
+        版本 15.4 
+      </div> 
+      <div class="app-size">
+        49.6 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="视频转换器" data-uc="https://drive.uc.cn/s/23034952a0e64" data-xunlei="https://pan.xunlei.com/s/VOmynG6A1fSgQpCdJjFmwDstA1?pwd=q923" data-kuake="https://pan.quark.cn/s/e1243bc4922f"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      简洁无广告的多种格式音视频剪辑合并工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - Aurora Store --> 
+   <div class="app-card" data-name="Aurora Store" data-category="工具资源" data-description="第三方应用商店"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/aurora.png" alt="Aurora Store"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        Aurora Store 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="Aurora Store" data-uc="https://drive.uc.cn/s/abd28d403ac04" data-xunlei="https://pan.xunlei.com/s/VOmynQiPTCFCwR1vK3qx4SvoA1?pwd=4shb" data-kuake="https://pan.quark.cn/s/55988159239e"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      第三方应用商店 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - 短视频去水印 --> 
+   <div class="app-card" data-name="短视频去水印" data-category="工具资源" data-description="解析去除平台视频水印"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/jy.png" alt="短视频去水印"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        短视频去水印 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="短视频去水印" data-uc="https://drive.uc.cn/s/89afb3beb2564" data-xunlei="https://pan.xunlei.com/s/VOmyn_IqXb1n7yIjCNKFG4zbA1?pwd=fi6f" data-kuake="https://pan.quark.cn/s/6af7a1a59c5c"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      解析去除平台视频水印 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：工具资源 - 自动精灵 --> 
+   <div class="app-card" data-name="自动精灵" data-category="工具资源" data-description="自动化脚本工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/zidongjingling.png" alt="自动精灵"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        自动精灵 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="自动精灵" data-uc="https://drive.uc.cn/s/43cc7fc235224" data-xunlei="https://pan.xunlei.com/s/VOmynpmql8lk9j9PieeCsAC1A1?pwd=fmar" data-kuake="https://pan.quark.cn/s/ccb218a475db"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      自动化脚本工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       工具资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：影视资源 - CIPTV --> 
+   <div class="app-card" data-name="CIPTV" data-category="影视资源" data-description="电视直播应用"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/ciptv.png" alt="CIPTV"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        CIPTV 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="CIPTV" data-uc="https://drive.uc.cn/s/f73617ef33014" data-xunlei="https://pan.xunlei.com/s/VOmykhdy5FqS2M3NKcjDuGp8A1?pwd=uath" data-kuake="https://pan.quark.cn/s/4d75c5c50f78"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      电视直播应用 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       影视资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：影视资源 - 大师兄影视去广告版 --> 
+   <div class="app-card" data-name="大师兄影视去广告版" data-category="影视资源" data-description="去广告纯净版影视应用"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/dashixiong.png" alt="大师兄影视去广告版"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        大师兄影视去广告版 
+      </div> 
+      <div class="app-version">
+        版本 去广告版 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="大师兄影视去广告版" data-uc="https://drive.uc.cn/s/c61857bb10ba4" data-xunlei="https://pan.xunlei.com/s/VOmylBIG32twFpR33wgr9dBPA1?pwd=zh6x" data-kuake="https://pan.quark.cn/s/874cc942f428"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      去广告纯净版影视应用 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       影视资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：影视资源 - 电影猎手去广告版 --> 
+   <div class="app-card" data-name="电影猎手去广告版" data-category="影视资源" data-description="去广告纯净版影视应用"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/dianyinglieshou.png" alt="电影猎手去广告版"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        电影猎手去广告版 
+      </div> 
+      <div class="app-version">
+        版本 去广告版 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="电影猎手去广告版" data-uc="https://drive.uc.cn/s/4726a43811784" data-xunlei="https://pan.xunlei.com/s/VOmylMNsTCFCwR1vK3qx2GsJA1?pwd=7iw2" data-kuake="https://pan.quark.cn/s/d341ed2a2eb7"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      去广告纯净版影视应用 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       影视资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：影视资源 - 搜剧 --> 
+   <div class="app-card" data-name="搜剧" data-category="影视资源" data-description="影视搜索应用"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/souju.png" alt="搜剧"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        搜剧 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="搜剧" data-uc="https://drive.uc.cn/s/ad49de10d2c34" data-xunlei="https://pan.xunlei.com/s/VOmylW1F_msEXf7qpkTnO_QgA1?pwd=6kjn" data-kuake="https://pan.quark.cn/s/af1d6f775153"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      影视搜索应用 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       影视资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：影视资源 - 直播电视稳定版 --> 
+   <div class="app-card" data-name="直播电视稳定版" data-category="影视资源" data-description="稳定版电视直播应用"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/zhibodianshi.png" alt="直播电视稳定版"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        直播电视稳定版 
+      </div> 
+      <div class="app-version">
+        版本 稳定版 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="直播电视稳定版" data-uc="https://drive.uc.cn/s/5227213e22bf4" data-xunlei="https://pan.xunlei.com/s/VOmyleMUTwgD42nobbkc5bQZA1?pwd=exb7" data-kuake="https://pan.quark.cn/s/25ea562e3bd9"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      稳定版电视直播应用 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       影视资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 现有应用卡片 - 影视资源（1影视） --> 
+   <div class="app-card" data-name="1影视" data-category="影视资源" data-description="高清影视资源，无广告纯净版"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/1ys.png" alt="1影视"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">1影视_纯净版</div> 
+      <div class="app-version">版本 3.2.1</div> 
+      <div class="app-size">28.5 MB</div> 
+     </div> 
+     <button class="download-btn" data-app="1影视_纯净版" data-uc="https://pan.uc.cn/s/1example1" data-xunlei="https://pan.xunlei.com/s/example1" data-kuake="https://pan.quark.cn/s/example1"> 
+      <span class="material-icons">download</span> 下载 
+     </button> 
+    </div> 
+    <div class="app-description">高清影视资源，无广告纯净版</div> 
+    <div class="app-meta"> 
+     <div class="category">影视资源</div> 
+    </div> 
+   </div> 
+   <!-- 现有应用卡片 - 影视资源（影视仓TV） --> 
+   <div class="app-card" data-name="影视仓TV" data-category="影视资源" data-description="TV端影视应用，支持多源解析"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/ysc.png" alt="影视仓TV"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">影视仓TV版</div> 
+      <div class="app-version">版本 1.0.5</div> 
+      <div class="app-size">15.8 MB</div> 
+     </div> 
+     <button class="download-btn" data-app="影视仓TV版" data-uc="https://pan.uc.cn/s/1example2" data-xunlei="https://pan.xunlei.com/s/example2" data-kuake="https://pan.quark.cn/s/example2"> 
+      <span class="material-icons">download</span> 下载 
+     </button> 
+    </div> 
+    <div class="app-description">TV端影视应用，支持多源解析</div> 
+    <div class="app-meta"> 
+     <div class="category">影视资源</div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：小说资源 - 番茄小说解析 --> 
+   <div class="app-card" data-name="番茄小说解析" data-category="小说资源" data-description="小说解析工具"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/fanqie.png" alt="番茄小说解析"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        番茄小说解析 
+      </div> 
+      <div class="app-version">
+        版本 未知 
+      </div> 
+      <div class="app-size">
+        未知 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="番茄小说解析" data-uc="https://drive.uc.cn/s/1396e8b4a0124" data-xunlei="https://pan.xunlei.com/s/VOmym3Ulz4Jp1DEcW0xfwN-DA1?pwd=jzff" data-kuake="https://pan.quark.cn/s/47e92d519d8e"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      小说解析工具 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       小说资源 
+     </div> 
+    </div> 
+   </div> 
+   
+   <!-- 新增：漫画资源 - Cimoc --> 
+   <div class="app-card" data-name="Cimoc" data-category="漫画资源" data-description="纯净无广告版本 纵享丝滑漫画"> 
+    <div class="app-header"> 
+     <div class="app-icon icon-blue"> 
+      <img src="/ziyuanhe/moc.png" alt="Cimoc"> 
+     </div> 
+     <div class="app-info"> 
+      <div class="app-name">
+        Cimoc_漫画 
+      </div> 
+      <div class="app-version">
+        版本 1.7.263 
+      </div> 
+      <div class="app-size">
+        42.77 MB 
+      </div> 
+     </div> 
+     <button class="download-btn" data-app="Cimoc_漫画" data-uc="https://drive.uc.cn/s/ece5f9bd2c484" data-xunlei="https://pan.xunlei.com/s/VOmymASnmzH4It5g1nMddcIxA1?pwd=vxk5" data-kuake="https://pan.quark.cn/s/2d972b629ea0"> <span class="material-icons">download</span> 下载 </button> 
+    </div> 
+    <div class="app-description">
+      纯净无广告版本 纵享丝滑漫画 
+    </div> 
+    <div class="app-meta"> 
+     <div class="category">
+       漫画资源 
+     </div> 
+    </div> 
+   </div> 
+   
+  </div> 
+  <!-- 下载线路选择弹窗 --> 
+  <div class="dialog-overlay" id="downloadDialog"> 
+   <div id="v184" class="dialog-container"> 
+    <div id="v185" class="dialog-header"> 
+     <h2 id="v186" class="dialog-title">选择下载线路</h2> 
+     <p class="dialog-subtitle" id="dialogAppName">请选择您偏好的下载方式</p> 
+    </div> 
+    <div id="v187" class="dialog-body"> 
+     <!-- UC网盘选项 --> 
+     <div class="download-option option-uc" data-type="uc"> 
+      <img src="/ziyuanhe/uc.png" alt="UC网盘图标"> 
+      <div class="option-info"> 
+       <div class="option-title">UC网盘</div> 
+       <div class="option-desc">适合UC网盘用户，下载速度快</div> 
+      </div> 
+     </div> 
+     <div id="v193" class="download-option option-xunlei" data-type="xunlei"> 
+      <img id="v194" src="/ziyuanhe/xunlei.png" alt="迅雷云盘图标"> 
+      <div id="v195" class="option-info"> 
+       <div id="v196" class="option-title">迅雷云盘</div> 
+       <div id="v197" class="option-desc">适合迅雷用户，下载速度快</div> 
+      </div> 
+     </div> 
+     <div id="v198" class="download-option option-kuake" data-type="kuake"> 
+      <img id="v199" src="/ziyuanhe/kuake.png" alt="夸克网盘图标"> 
+      <div id="v200" class="option-info"> 
+       <div id="v201" class="option-title">夸克网盘</div> 
+       <div id="v202" class="option-desc">适合夸克用户，简洁高效</div> 
+      </div> 
+     </div> 
+    </div> 
+    <div id="v203" class="dialog-footer"> 
+     <button class="dialog-btn dialog-btn-cancel" id="cancelBtn">取消</button> 
+    </div> 
+   </div> 
+  </div> 
+  <!-- 打赏弹窗 --> 
+  <div class="dialog-overlay" id="donateDialog"> 
+    <div class="dialog-container"> 
+      <div class="dialog-header"> 
+        <h2 class="dialog-title">每日红包和优惠福利</h2> 
+        <p class="dialog-subtitle">打开支付宝扫一扫就能领取红包和优惠</p> 
+      </div> 
+      <div class="dialog-body"> 
+        <div class="qrcode-container"> 
+          <div class="qrcode-item"> 
+            <img src="/ziyuanhe/wechat_qr.png" alt="微信收款码" class="qrcode-img"> 
+            <div class="qrcode-title">微信支付</div> 
+          </div> 
+          <div class="qrcode-item"> 
+            <img src="/ziyuanhe/alipay_qr1.jpg" alt="支付宝收款码" class="qrcode-img"> 
+            <div class="qrcode-title">免费红包</div> 
+          </div> 
+        </div> 
+      </div> 
+      <div class="dialog-footer"> 
+        <button class="dialog-btn dialog-btn-cancel" id="donateCancelBtn">关闭</button> 
+      </div> 
+    </div> 
+  </div> 
+  <!-- 打赏按钮 --> 
+  <div class="donate-fab" id="donateFab"> 
+    <span class="material-icons">favorite</span> 
+  </div> 
+  <!-- 全局加载状态 --> 
+  <div class="loading-overlay" id="loadingOverlay"> 
+   <span id="v204" class="material-icons">downloading</span> 
+   <p class="loading-text" id="loadingText">正在跳转到下载页面...</p> 
+  </div> 
+  <script>
+        // 全局变量
+        const searchInput = document.getElementById('searchInput');
+        const appsGrid = document.getElementById('appsGrid');
+        const appCards = document.querySelectorAll('.app-card');
+        const categoryFolders = document.querySelectorAll('.category-folder');
+        const downloadDialog = document.getElementById('downloadDialog');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const dialogAppName = document.getElementById('dialogAppName');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+
+        // 打赏相关元素
+        const donateFab = document.getElementById('donateFab');
+        const donateDialog = document.getElementById('donateDialog');
+        const donateCancelBtn = document.getElementById('donateCancelBtn');
+     
+        let currentCategory = '全部资源';
+        let currentDownloadBtn = null; // 当前点击的下载按钮
+        
+        // 添加无结果提示元素
+        const noResults = document.createElement('div');
+        noResults.className = 'no-results';
+        noResults.innerHTML = `
+            <span class="material-icons">search_off</span>
+            <h3>未找到匹配的应用</h3>
+            <p>请尝试不同的搜索词或分类</p>
+        `;
+        
+        // 页面可见性变化时重置状态
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                resetDownloadState();
+            }
+        });
+        
+        // 重置下载相关状态
+        function resetDownloadState() {
+            downloadDialog.classList.remove('active');
+            loadingOverlay.classList.remove('active');
+            
+            // 重置所有下载按钮状态
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-icons">download</span> 下载';
+            });
+            
+            currentDownloadBtn = null;
+        }
+        
+        // 分类切换功能
+        categoryFolders.forEach(folder => {
+            folder.addEventListener('click', function() {
+                currentCategory = this.getAttribute('data-category');
+                categoryFolders.forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+                filterApps();
+            });
+        });
+        
+        // 搜索功能
+        searchInput.addEventListener('input', filterApps);
+        
+        // 应用过滤函数
+        function filterApps() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let hasVisibleItems = false;
+            
+            appCards.forEach(card => {
+                const appName = card.getAttribute('data-name').toLowerCase();
+                const appCategory = card.getAttribute('data-category');
+                const appDescription = card.getAttribute('data-description').toLowerCase();
+                
+                const categoryMatch = currentCategory === '全部资源' || appCategory === currentCategory;
+                const searchMatch = searchTerm === '' || 
+                                    appName.includes(searchTerm) || 
+                                    appCategory.toLowerCase().includes(searchTerm) || 
+                                    appDescription.includes(searchTerm);
+                
+                if (categoryMatch && searchMatch) {
+                    card.style.display = 'flex';
+                    hasVisibleItems = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // 显示或隐藏无结果提示
+            if (!hasVisibleItems) {
+                if (!document.querySelector('.no-results')) {
+                    appsGrid.appendChild(noResults);
+                }
+            } else {
+                if (document.querySelector('.no-results')) {
+                    appsGrid.removeChild(noResults);
+                }
+            }
+        }
+        
+        // 应用卡片点击效果
+        document.querySelectorAll('.app-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                setTimeout(() => {
+                    this.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.1)';
+                }, 150);
+            });
+        });
+        
+        // 打开下载弹窗
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // 记录当前点击的按钮
+                currentDownloadBtn = this;
+                
+                // 获取应用名称并显示在弹窗中
+                const appName = this.getAttribute('data-app');
+                dialogAppName.textContent = `选择下载「${appName}」的方式`;
+                
+                // 显示弹窗
+                downloadDialog.classList.add('active');
+                
+                // 按钮加载效果
+                const originalHtml = this.innerHTML;
+                this.innerHTML = '<span class="material-icons">downloading</span> 处理中...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    if (currentDownloadBtn === this) {
+                        this.innerHTML = originalHtml;
+                        this.disabled = false;
+                    }
+                }, 500);
+            });
+        });
+        
+        // 关闭弹窗
+        cancelBtn.addEventListener('click', resetDownloadState);
+        
+        // 点击弹窗外部关闭弹窗
+        downloadDialog.addEventListener('click', (e) => {
+            if (e.target === downloadDialog) {
+                resetDownloadState();
+            }
+        });
+        
+        // 选择下载线路
+        document.querySelectorAll('.download-option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!currentDownloadBtn) return;
+                
+                const type = this.getAttribute('data-type');
+                const downloadLink = currentDownloadBtn.getAttribute(`data-${type}`);
+                const title = this.querySelector('.option-title').textContent;
+                const appName = currentDownloadBtn.getAttribute('data-app');
+                
+                if (downloadLink) {
+                    // 显示全局加载状态
+                    downloadDialog.classList.remove('active');
+                    loadingText.textContent = `正在跳转到${title}下载「${appName}」...`;
+                    loadingOverlay.classList.add('active');
+                    
+                    // 直接跳转，不使用复杂状态管理
+                    const newWindow = window.open(downloadLink, '_blank');
+                    
+                    // 无论新窗口是否成功打开，都重置状态
+                    setTimeout(() => {
+                        resetDownloadState();
+                    }, 1000);
+                }
+            });
+        });
+        
+        // 打赏功能
+        // 打开打赏弹窗
+        donateFab.addEventListener('click', function() {
+            donateDialog.classList.add('active');
+        });
+        
+        // 关闭打赏弹窗
+        donateCancelBtn.addEventListener('click', function() {
+            donateDialog.classList.remove('active');
+        });
+        
+        // 点击弹窗外部关闭弹窗
+        donateDialog.addEventListener('click', (e) => {
+            if (e.target === donateDialog) {
+                donateDialog.classList.remove('active');
+            }
+        });
+    </script> 
+  <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;bf99d47e22e2491f83d993eab8d4ff6c&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>  
+ </body>
+</html>
